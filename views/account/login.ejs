@@ -1,0 +1,17 @@
+<!-- Add a <h1> block if page has a title -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+<form method="POST" action="/account/login">
+  <fieldset>
+    <label for="account_email">Email</label><br>
+    <input type="email" name="account_email" id="accountEmail" required <% if (account_email) { %> value="<%= account_email %>" <% } %>><br>
+    <label for="account_password">Password</label><br>
+    <input type="password" name="account_password" id="accountPassword" required pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"><br>
+    <span class="password-requirements">Passwords must be at least 8 characters and contain at least 1 number, 1 capital letter and 1 special character</span><br>
+    <input type="submit" value="Login">
+    <p>No account? <span href="#">Sign-up</span></p>
+  </fieldset>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
