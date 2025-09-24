@@ -1,20 +1,15 @@
-// // Needed Resources 
-// const express = require("express")
-// const router = new express.Router()
-// const utilities = require("./utilities/")
-// const accountController = require("../controllers/accountController")
+// Needed Resources 
+const express = require("express")
+const router = new express.Router()
+const utilities = require("../utilities/")
+const accountController = require("../controllers/accountController")
+const regValidate = require('../utilities/account-validation')
 
-// router.get("/account/login", accountController.buildLogin)
+router.get("/login", utilities.handleErrors(accountController.buildLogin))
 
-// app.use(async (err, req, res, next) => {
-//   let nav = await utilities.getNav()
-//   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-//   if(err.status == 404){message = err.message} else {message = 'Uh Oh. Something went wrong!'}
-//   res.render("errors/error", {
-//     title: err.status || 'Server Error',
-//     message,
-//     nav
-//   })
-// })
+router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
-// module.exports = router
+// Process registration data
+router.post('/register', regValidate.registationRules(), regValidate.checkRegData, utilities.handleErrors(accountController.registerAccount))
+
+module.exports = router

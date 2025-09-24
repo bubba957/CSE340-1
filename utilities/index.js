@@ -57,6 +57,16 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the single vehicle detail view
+* ************************************ */
+Util.buildVehicleDetail = async function(data){
+  let detail = '<div id="detail-display">'
+      detail += '<div class="detail-img">'
+      detail += '<img src="' + data.inv_image +'" alt="Image of '+ data.inv_make 
+      + ' ' + data.inv_model +' on CSE Motors" />'
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

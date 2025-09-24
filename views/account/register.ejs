@@ -6,17 +6,27 @@
 } %>
 <% messages() %>
 <div>
-    <form method="POST" action="/account/login">
+    <p>All fields are required.</p>
+    <form method="POST" action="/account/register">
         <fieldset>
+            <label for="account_firstname">First Name</label><br>
+            <input type="text" name="account_firstname" id="accountFirstname" required><br>
+            <label for="account_lastname">Last Name</label><br>
+            <input type="text" name="account_lastname" id="accountLastname" required><br>
             <label for="account_email">Email</label><br>
             <input type="email" name="account_email" id="accountEmail" required <% if (account_email) { %> value="<%= account_email %>" <% } %>><br>
             <label for="account_password">Password</label><br>
             <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><br>
             <span class="password-requirements">Passwords must be at least 12 characters and contain at least 1 uppercase character, 1 number and 1 special character</span><br>
-            <button type="submit">Login</button>
-            <p>No account? <span href="/register">Sign-up</span></p>
+            <button type="submit">Register</button>
         </fieldset>
     </form>
-    <p>No account? <a href="/account/register">Sign-up</a></p>
 </div>
-<script src="/js/script.js"></script>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
