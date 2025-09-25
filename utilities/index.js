@@ -65,6 +65,7 @@ Util.buildVehicleDetail = async function(data){
       detail += '<div class="detail-img">'
       detail += '<img src="' + data.inv_image +'" alt="Image of '+ data.inv_make 
       + ' ' + data.inv_model +' on CSE Motors" />'
+    return detail
 }
 
 /* ****************************************

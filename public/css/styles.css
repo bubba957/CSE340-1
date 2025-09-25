@@ -137,6 +137,14 @@ li {
   background-color: hotpink;
 } */
 
+#detail-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto;
+  margin-top: 25px;
+  text-align: center;
+}
+
 footer {
   padding: 15px 0;
 }
