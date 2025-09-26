@@ -11,4 +11,7 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 // Route to build single view inventory item
 router.get("/detail/:inv_id", utilities.handleErrors(invController.buildDetail));
 
+// Route to build management view
+router.get("/", utilities.handleErrors(invController.buildManagement));
+
 module.exports = router;

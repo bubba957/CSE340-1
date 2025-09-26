@@ -1,0 +1,12 @@
+<!-- Add a <h1> block if page has a title -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<% messages() %>
+
+<p><a href="/inv/classification">Add New Classification</a></p>
+
+<p><a href="/inv/vehicle">Add New Vehicle</a></p>

@@ -65,6 +65,16 @@ Util.buildVehicleDetail = async function(data){
       detail += '<div class="detail-img">'
       detail += '<img src="' + data.inv_image +'" alt="Image of '+ data.inv_make 
       + ' ' + data.inv_model +' on CSE Motors" />'
+      detail += '</div>'
+      detail += '<div class="detail-info">'
+      detail += '<h2>' + data.inv_make + ' ' + data.inv_model + ' Details</h2>'
+      detail += '<p>Description: ' + data.inv_description + ' ' + data.inv_model + '</p><br>'
+      detail += '<p>Price: $' + new Intl.NumberFormat('en-US').format(data.inv_price) + '</p>'
+      detail += '<p>Miles: ' + new Intl.NumberFormat('en-US').format(data.inv_miles) + '</p>'
+      detail += '<p>Color: ' + data.inv_color + '</p>'
+      detail += '</div>'
+      detail += '</div>'
+      
     return detail
 }
 
