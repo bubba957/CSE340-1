@@ -1,0 +1,16 @@
+<!-- Add a <h1> block if page has a title -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<% messages() %>
+
+<form method="POST" action="/inv/add-classification">
+    <fieldset>
+        <label><h2>Classification Name</h2></label><br>
+        <span class="password-requirements">Name must not contain a space or special character.</span><br><br>
+        <input type="text" name="classification_name" id="classificationName" required pattern=".{3,}$"><br><br>
+        <button type="submit">Add Classification</button>
+    </fieldset>
