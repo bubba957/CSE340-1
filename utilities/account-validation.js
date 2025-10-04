@@ -4,6 +4,52 @@
   const accountModel = require("../models/account-model")
 
   /*  **********************************
+  *  Login Data Validation Rules
+  * ********************************* */
+  validate.loginRules = () => {
+    return [
+            // valid email is required and cannot already exist in the database
+      body("account_email")
+        .trim()
+        .isEmail()
+        .normalizeEmail() // refer to validator.js docs
+        .withMessage("A valid email is required.")
+        .custom(async (account_email) => {
+            const emailExists = await accountModel.checkExistingEmail(account_email)
+            if (emailExists){
+            throw new Error("Email exists. Please log in or use different email")
+            }
+        }),
+  
+      // password is required and must be strong password
+      body("account_password")
+        .trim()
+        .notEmpty()
+        .withMessage("Not a valid password"),
+    ]
+  }
+
+    /* ******************************
+ * Check data and return errors or continue to login
+ * ***************************** */
+validate.checkLoginData = async (req, res, next) => {
+  const { account_email } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email,
+    })
+    return
+  }
+  next()
+}
+
+  /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
   validate.registationRules = () => {
@@ -33,7 +79,7 @@
         .custom(async (account_email) => {
             const emailExists = await accountModel.checkExistingEmail(account_email)
             if (emailExists){
-            throw new Error("Email exists. Please log in or use different email")
+            throw new Error("Please log in or use different email")
             }
         }),
   

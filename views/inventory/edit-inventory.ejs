@@ -1,13 +1,13 @@
-<!-- Add a <h1> block if page has a title -->
+Add a <h1> block if page has a title
 <% if (title) { %>
 <h1><%= title %></h1>
 <% } else {
-  res.redirect('/') 
+  res.redirect('/')
 } %>
 
 <% messages() %>
 
-<form method="post" action="/inv/add-inventory">
+<form method="post" action="/inv/update">
     <fieldset>
         <label><h2>Classification</h2></label><br>
         <select name="classification_id" id="classificationId" required>
@@ -45,5 +45,5 @@
         <label><h2>Thumbnail</h2></label><br>
         <input type="text" name="inv_thumbnail" id="invThumbnail" accept="/images/vehicles/no-image-tn.png"><br><br>
 
-        <button type="submit">Add Vehicle</button>
+        <button type="submit">Update Vehicle</button>
     </fieldset>

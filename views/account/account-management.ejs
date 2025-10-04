@@ -1,0 +1,10 @@
+<!-- Add a <h1> block if page has a title -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %> 
+
+<% messages() %>
+
+<h2>You're logged in!</h2>
