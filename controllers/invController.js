@@ -4,9 +4,21 @@ const utilities = require("../utilities/")
 const invCont = {}
 
 /* ***************************
+ *  Build management view
+ * ************************** */
+async function buildManagement(req, res, next) {
+  let nav = await utilities.getNav()
+    res.render("./inventory/management", {
+        title: "Vehicle Management",
+        nav,
+        classificationSelect,
+    })
+}
+
+/* ***************************
  *  Build inventory by classification view
  * ************************** */
-invCont.buildByClassificationId = async function (req, res, next) {
+async function buildByClassificationId(req, res, next) {
   const classification_id = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
@@ -22,7 +34,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ***************************
  *  Build single view inventory item
  * ************************** */
-invCont.buildDetail = async function (req, res, next) {
+async function buildDetail(req, res, next) {
   const inv_id = req.params.inv_id
   let vehicle = await invModel.getInventoryByInvId(inv_id)
   const htmlData = await utilities.buildVehicleDetail(vehicle)
@@ -37,23 +49,9 @@ invCont.buildDetail = async function (req, res, next) {
 }
 
 /* ***************************
- *  Build management view
- * ************************** */
-invCont.buildManagement = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  const classificationSelect = await utilities.buildClassificationList()
-  res.render("./inventory/management", {
-    title: "Vehicle Management",
-    nav,
-    errors: null,
-    classificationSelect,
-  })
-}
-
-/* ***************************
  *  Build classification view
  * ************************** */
-invCont.buildClassificationManagement = async function (req, res, next) {
+async function buildClassificationManagement(req, res, next) {
   let nav = await utilities.getNav()
   res.render("./inventory/add-classification", {
     title: "Add Classification",
@@ -64,7 +62,7 @@ invCont.buildClassificationManagement = async function (req, res, next) {
 /* ***************************
  *  Build vehicle view
  * ************************** */
-invCont.buildVehicleManagement = async function (req, res, next) {
+async function buildVehicleManagement(req, res, next) {
   let nav = await utilities.getNav()
   const classificationSelect = await utilities.buildClassificationList()
   res.render("./inventory/add-inventory", {
@@ -78,7 +76,7 @@ invCont.buildVehicleManagement = async function (req, res, next) {
 /* ***************************
  *  Process classification data
  * ************************** */
-invCont.registerClassification = async function (req, res) {
+async function registerClassification(req, res) {
   let nav = await utilities.getNav()
   const { classification_name } = req.body
     const regResult = await invModel.registerClassification(classification_name)
@@ -103,7 +101,7 @@ invCont.registerClassification = async function (req, res) {
 /* ***************************
  *  Process vehicle data
  * ************************** */
-invCont.registerVehicle = async function (req, res) {
+async function registerVehicle(req, res) {
   let nav = await utilities.getNav()
   const { inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id } = req.body
     const regResult = await invModel.registerVehicle(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id)
@@ -128,7 +126,7 @@ invCont.registerVehicle = async function (req, res) {
 /* ***************************
  *  Return Inventory by Classification As JSON
  * ************************** */
-invCont.getInventoryJSON = async (req, res, next) => {
+async function getInventoryJSON(req, res, next) {
   const classification_id = parseInt(req.params.classification_id)
   const invData = await invModel.getInventoryByClassificationId(classification_id)
   if (invData[0].inv_id) {
@@ -141,7 +139,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 /* ***************************
  *  Build the edit vehicle view
  * ************************** */
-invCont.buildEditView = async function (req, res, next) {
+async function buildEditView(req, res, next) {
   const inv_id = parseInt(req.params.inv_id)
   let nav = await utilities.getNav()
   const itemData = await invModel.getInventoryByInvId(inv_id)
@@ -164,4 +162,16 @@ invCont.buildEditView = async function (req, res, next) {
     inv_color: itemData.inv_color,
     classification_id: itemData.classification_id
   })
+}
+
+module.exports = {
+  buildByClassificationId,
+  buildDetail,
+    buildManagement,
+    buildClassificationManagement,
+    buildVehicleManagement,
+    registerClassification,
+    registerVehicle,
+    getInventoryJSON,
+    buildEditView,
 }
